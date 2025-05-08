@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Tic Tack Toe </title>
+    <style> 
+    /* player1-rgb(160, 137, 99)
+    player2-rgb(112, 109, 84) */
+    body{
+        margin: 0;
+        padding: 0;
+        background-color: rgb(201, 177, 148);
+    }
+        .app-name{
+            text-align:center;
+        }
+        .board{
+            border:10px double black;
+            display:flex;
+            flex-wrap: wrap;
+            margin:50px auto;
+            width:500px;
+            justify-content: center;
+            align-items: center;
+            padding:40px;
+            border-radius: 10px;
+            background-color: rgb(219, 219, 219);
+        }
+        .cell{
+            width:150px;
+            height:150px;
+            border:1px solid black; 
+            margin: 2px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .cell-p1{
+           background-color: rgb(160, 137, 99);
+        }
+        .cell-p2{
+            background-color: rgb(112, 109, 84);
+        }
+        .cell:hover{
+            transition: 3sec;
+            cursor:pointer;
+            box-shadow:0 0 10px 0 #000;
+        }
+        .player-turn{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="app-name" >Tic Tac Toe </h1>
+    <p class="player-turn" id="player-element">
+        player turn
+    </p>
+    <div class="board" id="board">
+        <div class="cell cell-p1"></div>
+        <div class="cell cell-p2" ></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        
+    </div>
+    <script>
+        const board=[-1,-1,-1,-1,-1,-1,-1,-1,-1];
+        let turn= 1;
+        const cellclass={
+            1: "cell-p1",
+            2: "cell-p2",
+        };
+
+        const playerImage= {
+            1: "check.png",
+            2: "close.png",
+        };
+           
+        
+        function renderboard(){
+            const boardElement = document.getElementById("board");
+            boardElement.innerHTML ="";
+              
+            const playerElement=document.getElementById("player-element");
+            playerElement.innerText = `player ${turn}'s Turn`;
+            
+        board.forEach((cellvalue, index)=>{
+            const cellplayerImage=playerImage[cellvalue];
+
+            const cellImage= cellplayerImage 
+            ? `<img src="${cellplayerImage}" />`
+            : "";
+      boardElement.innerHTML+=`<div class="cell ${cellclass[cellvalue]}" 
+      onclick="handleTurn(${index})">
+      ${cellImage}
+      </div>`;
+            });
+            checkWinner();
+        }
+                renderboard();
+                function handleTurn(cellIndex){
+    if(board[cellIndex]==-1){
+        board[cellIndex]=turn;
+        turn=turn==1 ? 2 : 1;
+        renderboard(); 
+    }else{
+        alert("Invalid Move");
+        return;
+    }
+}
+
+                function checkWinner(){
+                    console.log("checking Winner");
+                    console.log(board);
+                    const PLAYER_1=1;
+                    const PLAYER_2=2;
+
+                    if( checkPlayerForPosition(PLAYER_1, 0,1,2)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,0,1,2)){
+                        alert("player 2 wins");
+                    }
+                
+
+                    if( checkPlayerForPosition(PLAYER_1, 3,4,5)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,3,4,5)){
+                        alert("player 2 wins");
+                    }
+
+                    if( checkPlayerForPosition(PLAYER_1, 6,7,8)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,6,7,8)){
+                        alert("player 2 wins");
+                    }
+
+                    if( checkPlayerForPosition(PLAYER_1, 2,4,6)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,2,4,6)){
+                        alert("player 2 wins");
+                    }
+                    if( checkPlayerForPosition(PLAYER_1, 0,4,8)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,0,4,8)){
+                        alert("player 2 wins");
+                    }
+
+                    if( checkPlayerForPosition(PLAYER_1, 0,3,6)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,0,3,6)){
+                        alert("player 2 wins");
+                    }
+
+                    if( checkPlayerForPosition(PLAYER_1, 1,4,7)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,1,4,7)){
+                        alert("player 2 wins");
+                    }
+                    if( checkPlayerForPosition(PLAYER_1, 2,5,8)){
+                        alert("player 1 wins");
+                    }
+                    else if ( checkPlayerForPosition(PLAYER_2,2,5,8)){
+                        alert("player 2 wins");
+                    }
+
+                    
+                    if(board[0]==PLAYER_1 && 
+                    board[1]==PLAYER_1 &&
+                     board[2]==PLAYER_1){
+                        alert("player 1 wins");
+                    }
+                    else if(
+                        board[3] == PLAYER_1&&
+                        board[4] == PLAYER_1&&
+                        board[5] == PLAYER_1
+                    ){
+                        alert("player 1 wins")
+                    }
+                    if(
+                        board[0] == PLAYER_2&&
+                        board[1] == PLAYER_2&&
+                        board[2] == PLAYER_2)
+                        {
+                            alert("player 2wins");
+                        }
+                        else if(
+                            board[3] == PLAYER_2&&
+                        board[4] == PLAYER_2&&
+                        board[5] == PLAYER_2
+                        ){
+                            alert("player 2 wins");
+                        }
+                    }
+                function checkPlayerForPosition(player, p1,p2,p3){
+                    if(board[p1]== player && board[p2]==player && board[p3]== player){
+                        return true;
+                    }
+                    else false;
+                }
+
+    </script>
+</body>
+</html>
